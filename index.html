@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f4eb">
+  <meta name="description" content="A pocket-sized Snake arcade. Three modes, three speeds, golden bites, and a personal best worth chasing. Play instantly with keyboard or touch.">
+  <title>Snake — Pocket Arcade</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23c6dc9d'/%3E%3Cpath d='M16 16h30v14H26v18h22' fill='none' stroke='%232d442d' stroke-width='10'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="engine.js" defer></script>
+  <script src="game.js" defer></script>
+</head>
+<body>
+<main class="arcade">
+  <header class="masthead">
+    <a class="wordmark" href="./" aria-label="Pocket Arcade home"><span class="logo" aria-hidden="true">▧</span> POCKET ARCADE <span class="issue">/ 001</span></a>
+    <div class="utilities"><button id="sound" class="utility" type="button" aria-pressed="false" aria-label="Enable sound">SOUND <span>OFF</span></button><button id="theme" class="utility" type="button" aria-pressed="false" aria-label="Enable dark theme">◐ <span>THEME</span></button></div>
+  </header>
+  <section class="heading" aria-labelledby="game-name">
+    <div><p class="eyebrow">AN OLD FAVORITE. A FRESH START.</p><h1 id="game-name">Snake<span>.</span></h1><p class="tagline">Small snake. Big appetite. One more go.</p></div>
+    <div class="edition" aria-hidden="true"><span>THE CLASSICS</span><svg viewBox="0 0 60 48"><path d="M8 8h36v12H20v20h28"/><circle cx="39" cy="8" r="2"/></svg><b>POCKET EDITION</b></div>
+  </section>
+  <div class="game-layout">
+    <div class="play-area">
+      <section class="console" aria-label="Snake game">
+        <div class="stats"><div><span class="stat-label">YOUR SCORE</span><strong id="score">000</strong></div><div class="level-stat"><span class="stat-label">LEVEL</span><strong id="level">01</strong></div><div class="best-stat"><span class="stat-label">PERSONAL BEST</span><strong id="best">000</strong></div></div>
+        <div class="screen" id="screen">
+          <canvas id="board" width="600" height="600" tabindex="0" aria-label="Snake playing field. Arrow keys or W A S D to move, Space to pause." aria-describedby="controls-help">Your browser needs canvas support to display this game.</canvas>
+          <div class="overlay" id="overlay"><div class="overlay-inner">
+            <span class="mini" id="overlay-label">THE ORIGINAL TIME KILLER</span><div class="snake-mark" aria-hidden="true">▰ ▰ ▰ <span>▪</span></div>
+            <h2 id="title">Ready for<br>another bite?</h2><p id="message">Collect the bites. Grow your snake.<br>Keep your tail out of trouble.</p>
+            <div class="run-summary" id="run-summary" hidden><div><strong id="run-food">0</strong><span>BITES</span></div><div><strong id="run-time">0:00</strong><span>TIME</span></div><div><strong id="run-length">3</strong><span>LENGTH</span></div></div>
+            <button id="start" class="play-button" type="button"><span id="start-label">Let’s play</span><span aria-hidden="true">→</span></button><small id="hint">OR PRESS SPACE TO START</small>
+          </div></div><span class="board-label" id="board-label" aria-hidden="true">20 × 20 · CLASSIC</span>
+        </div>
+        <div class="console-footer"><span class="status"><i aria-hidden="true"></i><span id="status">READY WHEN YOU ARE</span></span><button class="text-button" id="pause" type="button" disabled>PAUSE II</button></div>
+        <div class="progress-track" id="progress" role="progressbar" aria-label="Bites until next level" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span id="progress-fill"></span></div>
+      </section>
+      <div class="under"><p id="run-info">A fresh start looks good on you.</p><div><button class="text-button" id="fullscreen" type="button" hidden>⛶ EXPAND</button><button class="text-button" id="restart" type="button">↻ RESTART</button></div></div>
+      <nav class="dpad" aria-label="Touch direction controls"><button data-dir="up" type="button" aria-label="Move up">↑</button><div><button data-dir="left" type="button" aria-label="Move left">←</button><button data-dir="down" type="button" aria-label="Move down">↓</button><button data-dir="right" type="button" aria-label="Move right">→</button></div></nav>
+    </div>
+    <aside class="side-panel" aria-label="Game settings and instructions">
+      <section class="settings"><div class="section-label"><span>MAKE IT YOUR GAME</span><span aria-hidden="true">+</span></div>
+        <fieldset id="mode-settings"><legend>01 <span>Pick your playground</span></legend><div class="mode-options">
+          <label class="mode-option"><input type="radio" name="mode" value="classic" checked><span class="mode-icon" aria-hidden="true">□</span><span><b>Classic</b><small>Watch those walls.</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+          <label class="mode-option"><input type="radio" name="mode" value="wrap"><span class="mode-icon" aria-hidden="true">↔</span><span><b>No walls</b><small>Go around. Keep going.</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+          <label class="mode-option"><input type="radio" name="mode" value="maze"><span class="mode-icon" aria-hidden="true">▦</span><span><b>The maze</b><small>A few twists in the tale.</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+        </div></fieldset>
+        <fieldset id="speed-settings"><legend>02 <span>Set the pace</span></legend><div class="speed-options"><label><input type="radio" name="difficulty" value="chill"><span>Chill</span></label><label><input type="radio" name="difficulty" value="normal" checked><span>Classic</span></label><label><input type="radio" name="difficulty" value="turbo"><span>Turbo</span></label></div></fieldset>
+        <p class="settings-note" id="settings-note">Your best is saved for each mode & pace.</p>
+      </section>
+      <section class="how-to" id="controls-help"><h3>A little field guide</h3><p><span class="food-dot" aria-hidden="true"></span> A bite = <b id="points-help">10 points</b></p><p><span class="food-dot gold" aria-hidden="true"></span> Golden bite = <b>3× points</b></p><p class="bonus-note">Every 5 bites, a golden treat appears. Catch it before it disappears.</p><div class="keyboard-help"><span><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> or <b>W A S D</b></span><span><kbd>SPACE</kbd> pause <span class="key-separator">/</span> <kbd>R</kbd> restart</span></div><p class="touch-help">Swipe the board or tap the arrows to turn.</p></section>
+      <div class="little-note"><span aria-hidden="true">✳</span><p>Simple rules.<br>Endless “one more try.”</p></div>
+    </aside>
+  </div>
+  <footer><span>NO DOWNLOADS. NO DRAMA. JUST SNAKE.</span><span>Made for your next little break. <i aria-hidden="true">✳</i></span></footer>
+  <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+  <noscript><p class="noscript">Enable JavaScript to play Snake. No installation is needed.</p></noscript>
+</main>
+</body>
+</html>
